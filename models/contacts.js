@@ -15,7 +15,7 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 const crypto = require("node:crypto");
 
-const contactsPath = path.join(__dirname, 'db', 'contacts.json');
+const contactsPath = path.join(__dirname, 'contacts.json');
 
 async function read () {
   const data = await fs.readFile(contactsPath);
@@ -53,26 +53,26 @@ async function removeContact(contactId) {
 }
 
 
-async function addContact(contact) {
+async function addContact(body) {
   
   const data = await read();
-  const newContact = {...contact, id: crypto.randomUUID()};
+  const newContact = {...body, id: crypto.randomUUID()};
   data.push(newContact);
   await write(data);
   return newContact; 
 }
 
-async function updateContact(contactId, body) {
+async function updateContact(id, body) {
   
   const data = await read();
   
-  const index = data.findIndex((item) => item.id === contactId);
+  const index = data.findIndex((item) => item.id === id);
   
   if (index === -1) {
     return null;
   }
   
-  data[index] = { contactId, ...body };
+  data[index] = { ...body, id };
   
   await write(data);
   
