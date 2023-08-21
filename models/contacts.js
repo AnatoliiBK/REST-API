@@ -1,16 +1,3 @@
-// const fs = require('fs/promises')
-
-// const listContacts = async () => {}
-
-// const getContactById = async (contactId) => {}
-
-// const removeContact = async (contactId) => {}
-
-// const addContact = async (body) => {}
-
-// const updateContact = async (contactId, body) => {}
-
-
 const fs = require('node:fs/promises');
 const path = require('node:path');
 const crypto = require("node:crypto");
@@ -79,13 +66,6 @@ async function updateContact(id, body) {
   return data[index];
 }
 
-
-// module.exports = {
-//   listContacts,
-//   getContactById,
-//   removeContact,
-//   addContact
-// };
 
 module.exports = {
   listContacts,
