@@ -1,16 +1,3 @@
-// const Joi = require('joi');
-
-
-// const addSchema = Joi.object({
-//     name: Joi.string().required(),
-//     email: Joi.string().email().required(),
-//     phone: Joi.string().required(),
-//   });
-
-//   module.exports = {
-//     addSchema
-//   }
-
 const Joi = require('joi');
 
 const addSchema = Joi.object({
@@ -28,3 +15,19 @@ const addSchema = Joi.object({
   module.exports = {
     addSchema
   }
+
+// const Joi = require('joi');
+
+// const customMessages = {
+//     'any.required': 'missing required {#label} field'
+// };
+
+// const addSchema = Joi.object({
+//     name: Joi.string().required().messages(customMessages),
+//     email: Joi.string().email().required().messages(customMessages),
+//     phone: Joi.string().required().messages(customMessages)
+// });
+
+// module.exports = {
+//     addSchema
+// };
