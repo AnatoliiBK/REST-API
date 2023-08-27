@@ -4,7 +4,7 @@ const { HttpError, ctrlWrapper } = require("../helpers");
 
 const listContacts = async (req, res) => {
   // const result = await contacts.listContacts();
-  const result = await Contact.find();
+  const result = await Contact.find({}, "-__v");
   res.json(result);
 };
 
