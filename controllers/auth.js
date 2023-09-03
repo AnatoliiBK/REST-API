@@ -2,7 +2,7 @@ const { User } = require('../models/user');
 const { HttpError, ctrlWrapper } = require("../helpers");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-// const {SECRET_KEY} = process.env;
+
 const {SECRET_KEY} = process.env;
 
 const register = async(req, res) => {
@@ -53,7 +53,7 @@ const login = async(req, res)=> {
     }
 
     const payload = {
-        id: user._id,
+        contactId: user._id,
     }
 
     const token = jwt.sign(payload, SECRET_KEY, {expiresIn: "23h"});
