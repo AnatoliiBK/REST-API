@@ -1,18 +1,43 @@
-const mongoose = require('mongoose');
-const { DB_HOST } = require('./config');
+// const mongoose = require('mongoose');
+// const { DB_HOST } = require('./config');
 
-const app = require('./app')
+// const app = require('./app')
 
-mongoose.set('strictQuery', true)
+// mongoose.set('strictQuery', true)
 
-mongoose.connect(DB_HOST)
+// mongoose.connect(DB_HOST)
+//   .then(() => {
+//     app.listen(3000);
+//     console.log("Database connection successful");
+
+//   })
+//   .catch(error => {
+//     console.log(error.message);
+//     process.exit(1);
+//   })
+
+
+const mongoose = require("mongoose");
+
+require("dotenv").config({ override: true, debug: true });
+
+const { DB_HOST, PORT = 3000 } = process.env;
+console.log(process.env.DB_HOST);
+console.log(process.env.SECRET_KEY);
+
+const app = require("./app");
+
+mongoose.set("strictQuery", true);
+
+mongoose
+  .connect(DB_HOST)
   .then(() => {
-    app.listen(3000);
-    console.log("Database connection successful");
-
+    app.listen(PORT, () => {
+      
+      console.log("Database connection successful");
+    });
   })
-  .catch(error => {
+  .catch((error) => {
     console.log(error.message);
     process.exit(1);
-  })
-
+  });
