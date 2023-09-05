@@ -55,5 +55,3 @@ const schemas = {
 const Contact = model("contact", contactSchema);
 
 module.exports = { Contact, schemas };
-
-// {versionKey: 'false', timeseries: true}
