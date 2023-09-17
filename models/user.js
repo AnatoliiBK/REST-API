@@ -43,7 +43,7 @@ const userSchema = new Schema(
 userSchema.post("save", handleMongooseError);
 
 const authSchema = Joi.object({
-  email: Joi.string().required().messages({
+  email: Joi.string().required().email().messages({
     "any.required": "missing required email field",
   }),
   password: Joi.string().required().messages({
