@@ -22,4 +22,7 @@ router.patch(
 
 router.post("/avatars", upload.single("avatar"), ctrl.giveStaticImg);
 
+router.get("/verify/:verificationToken", ctrl.verify);
+router.post("/verify/");
+
 module.exports = router;
