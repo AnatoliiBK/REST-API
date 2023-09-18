@@ -76,7 +76,7 @@ const login = async (req, res) => {
   });
 };
 
-const getCurrent = async (req, res) => {
+const getCurrent = (req, res) => {
   const { email, subscription } = req.user;
   res.json({
     email,
@@ -138,6 +138,35 @@ const verify = async (req, res, next) => {
   }
 };
 
+const resendVerifyEmail = async (req, res) => {
+  const { email } = req.body;
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    throw HttpError(404, "User not found");
+  }
+
+  if (user.verify) {
+    throw HttpError(400, "Verification has already been passed");
+  }
+
+  await sendEmail({
+    to: user.email,
+    subject: "To verify your email",
+    html: `
+    <p>To confirm your registration, please click on link below</p>
+    <p>
+      <a href='http://localhost:${PORT}/users/verify/${user.verificationToken}'>Follow me</a>
+    </p>`,
+    text: `
+    To confirm your registration, please click on link below\n
+    http://localhost:${PORT}/users/verify/${user.verificationToken}
+    `,
+  });
+
+  res.json({ message: "Verification email send" });
+};
+
 module.exports = {
   register: ctrlWrapper(register),
   login: ctrlWrapper(login),
@@ -146,4 +175,5 @@ module.exports = {
   updateAvatar: ctrlWrapper(updateAvatar),
   giveStaticImg,
   verify,
+  resendVerifyEmail,
 };

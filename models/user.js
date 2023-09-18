@@ -21,12 +21,10 @@ const userSchema = new Schema(
       enum: subList,
       default: "starter",
     },
-    token: String,
-    avatarURL: {
+    token: {
       type: String,
-      required: true,
+      default: "",
     },
-
     verify: {
       type: Boolean,
       default: false,
@@ -53,9 +51,16 @@ const authSchema = Joi.object({
   subscription: Joi.string().valid(...subList),
 });
 
+const emailSchema = Joi.object({
+  email: Joi.string().required().email().messages({
+    "any.required": "missing required field email",
+  }),
+});
+
 const User = model("user", userSchema);
 
 module.exports = {
   authSchema,
+  emailSchema,
   User,
 };
