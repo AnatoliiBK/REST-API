@@ -21,10 +21,17 @@ const userSchema = new Schema(
       enum: subList,
       default: "starter",
     },
-    token: String,
-    avatarURL: {
+    token: {
       type: String,
-      required: true,
+      default: "",
+    },
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+      required: [true, "Verify token is required"],
     },
   },
 
@@ -34,7 +41,7 @@ const userSchema = new Schema(
 userSchema.post("save", handleMongooseError);
 
 const authSchema = Joi.object({
-  email: Joi.string().required().messages({
+  email: Joi.string().required().email().messages({
     "any.required": "missing required email field",
   }),
   password: Joi.string().required().messages({
@@ -44,9 +51,16 @@ const authSchema = Joi.object({
   subscription: Joi.string().valid(...subList),
 });
 
+const emailSchema = Joi.object({
+  email: Joi.string().required().email().messages({
+    "any.required": "missing required field email",
+  }),
+});
+
 const User = model("user", userSchema);
 
 module.exports = {
   authSchema,
+  emailSchema,
   User,
 };
